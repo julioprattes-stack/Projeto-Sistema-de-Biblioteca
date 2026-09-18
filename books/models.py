@@ -4,7 +4,7 @@ class BookModel(models.Model):
     title = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
     category = models.CharField(max_length=50)
-    publication_yer = models.IntegerField()  #ano publicaçao
+    publication_year = models.IntegerField()  #ano publicaçao
     ibsn = models.CharField(max_length=50)
     available = models.BooleanField()  #disponivel
     created_at = models.DateTimeField(auto_now_add=True)  #criado_em

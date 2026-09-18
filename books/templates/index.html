@@ -1,0 +1,89 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lista de Livros</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .livro {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .livro h2 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        .livro p {
+            color: #555;
+            margin: 8px 0;
+        }
+
+        .vazio {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Lista de Livros</h1>
+
+        {% for book in books %}
+
+            <div class="livro">
+
+                <h2>{{ book.title }}</h2>
+
+                <p>
+                    <strong>Autor:</strong>
+                    {{ book.author }}
+                </p>
+
+                <p>
+                    <strong>Ano:</strong>
+                    {{ book.publication_yer }}
+                </p>
+
+            </div>
+
+        {% empty %}
+
+            <p class="vazio">
+                Nenhum livro cadastrado.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>
+```
