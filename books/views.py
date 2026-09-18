@@ -3,7 +3,7 @@ from books.models import BookModel
 
 
 def bookview(request):
-    books = BookModel.object.all()
+    books = BookModel.objects.all()
 
     return render(
         request,
