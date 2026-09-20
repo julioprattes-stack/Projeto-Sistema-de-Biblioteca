@@ -52,3 +52,20 @@ def editview(request, id):
         'books/edit.html',
         {'form':form}
     )
+
+def deleteview(request, id):
+
+    book = BookModel.objects.get(id=id)
+
+    if request.method == 'POST':
+        book.delete()
+
+        return redirect('books:book')
+
+    return render(
+        request,
+        'books/delete.html',
+        {'book':book}
+    )
+
+        
