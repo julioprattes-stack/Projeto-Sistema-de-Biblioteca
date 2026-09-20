@@ -31,3 +31,24 @@ def registerview(request):
         'books/register.html',
         {'form':form}
     )
+
+def editview(request, id):
+
+    book = BookModel.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=book)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('books:book')
+
+    else:
+        form = RegisterForm(instance=book)
+
+    return render(
+        request,
+        'books/edit.html',
+        {'form':form}
+    )
