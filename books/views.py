@@ -1,16 +1,27 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from books.models import BookModel
 from books.forms import RegisterForm
 
 
 def bookview(request):
-    books = BookModel.objects.all()
+
+    search = request.GET.get('search', '')
+
+    if search:
+        books = BookModel.objects.filter(
+            Q(title__icontains=search) |
+            Q(author__icontains=search)
+        )
+    else:
+        books = BookModel.objects.all()
 
     return render(
         request,
         'books/index.html',
         {
-            'books': books
+            'books': books,
+            'search': search
         }
     )
 

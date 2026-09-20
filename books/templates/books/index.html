@@ -51,6 +51,47 @@
 
 <body>
 
+    <form method="GET">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Pesquisar livro..."
+            value="{{ search }}"
+        >
+
+        <button type="submit">
+            Pesquisar
+        </button>
+
+    </form>
+
+    <hr>
+
+    {% for book in books %}
+
+        <h2>{{ book.title }}</h2>
+
+        <p>Autor: {{ book.author }}</p>
+        <p>Categoria: {{ book.category }}</p>
+        <p>Ano: {{ book.publication_year }}</p>
+
+        <a href="{% url 'books:edit' book.id %}">
+            Editar
+        </a>
+
+        <a href="{% url 'books:delete' book.id %}">
+            Deletar
+        </a>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Nenhum livro encontrado.</p>
+
+    {% endfor %}
+
     <div class="container">
 
         <h1>Lista de Livros</h1>
