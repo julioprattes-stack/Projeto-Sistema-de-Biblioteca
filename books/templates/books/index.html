@@ -1,27 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Lista de Livros</title>
+    <title>Minha Biblioteca</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
-            padding: 40px;
+            background-color: #f4f4f4;
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
+        header {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
         }
 
         .container {
             max-width: 900px;
-            margin: auto;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .pesquisa {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .pesquisa input {
+            padding: 10px;
+            width: 70%;
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
         }
 
         .livro {
@@ -29,78 +66,67 @@
             padding: 20px;
             margin-bottom: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .livro h2 {
-            margin-top: 0;
-            color: #222;
-        }
-
-        .livro p {
-            color: #555;
-            margin: 8px 0;
-        }
-
-        .vazio {
-            text-align: center;
-            color: #777;
+        .livro a {
+            margin-right: 15px;
         }
     </style>
 </head>
 
 <body>
 
-    <form method="GET">
+    <header>
 
-        <input
-            type="text"
-            name="search"
-            placeholder="Pesquisar livro..."
-            value="{{ search }}"
-        >
+        <h1>Minha Biblioteca</h1>
 
-        <button type="submit">
-            Pesquisar
-        </button>
+        <nav>
 
-    </form>
+            <a href="{% url 'books:book' %}">
+                Início
+            </a>
 
-    <hr>
+            <a href="{% url 'books:register' %}">
+                Cadastrar Livro
+            </a>
 
-    {% for book in books %}
+        </nav>
 
-        <h2>{{ book.title }}</h2>
+    </header>
 
-        <p>Autor: {{ book.author }}</p>
-        <p>Categoria: {{ book.category }}</p>
-        <p>Ano: {{ book.publication_year }}</p>
-
-        <a href="{% url 'books:edit' book.id %}">
-            Editar
-        </a>
-
-        <a href="{% url 'books:delete' book.id %}">
-            Deletar
-        </a>
-
-        <hr>
-
-    {% empty %}
-
-        <p>Nenhum livro encontrado.</p>
-
-    {% endfor %}
 
     <div class="container">
 
-        <h1>Lista de Livros</h1>
+        <div class="pesquisa">
+
+            <h2>Pesquisar livros</h2>
+
+            <form method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Digite o nome do livro..."
+                    value="{{ search }}"
+                >
+
+                <button type="submit">
+                    Pesquisar
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <h2>Livros cadastrados</h2>
+
 
         {% for book in books %}
 
             <div class="livro">
 
-                <h2>{{ book.title }}</h2>
+                <h3>{{ book.title }}</h3>
 
                 <p>
                     <strong>Autor:</strong>
@@ -108,21 +134,33 @@
                 </p>
 
                 <p>
+                    <strong>Categoria:</strong>
+                    {{ book.category }}
+                </p>
+
+                <p>
                     <strong>Ano:</strong>
                     {{ book.publication_year }}
                 </p>
+
+                <a href="{% url 'books:edit' book.id %}">
+                    Editar
+                </a>
+
+                <a href="{% url 'books:delete' book.id %}">
+                    Deletar
+                </a>
 
             </div>
 
         {% empty %}
 
-            <p class="vazio">
-                Nenhum livro cadastrado.
-            </p>
+            <p>Nenhum livro encontrado.</p>
 
         {% endfor %}
 
     </div>
 
 </body>
+
 </html>
