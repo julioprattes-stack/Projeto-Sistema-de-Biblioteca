@@ -20,6 +20,13 @@
             padding: 20px;
         }
 
+        footer {
+            background-color: #ccc;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+
         header h1 {
             margin: 0;
         }
@@ -85,18 +92,18 @@
         }
 
         .logout-btn {
-        background: none;
-        border: none;
-        color: white;
-        text-decoration: none;
-        margin-right: 20px;
-        padding: 0;
-        font: inherit;
-        cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
         }
 
         .logout-btn:hover {
-        text-decoration: underline;
+            text-decoration: underline;
         }
 
         {% block extra_style %}{% endblock %}
@@ -137,6 +144,10 @@
         {% block content %}{% endblock %}
 
     </div>
+
+    <footer>
+        <p>&copy; 2026 JulioDevs</p>
+    </footer>
 
 </body>
 
