@@ -1,38 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Excluir Livro{% endblock %}
 
-    <title>Excluir Livro</title>
-</head>
+{% block content %}
 
-<body>
+    <div class="card">
+        <h2>Excluir Livro</h2>
 
-    <h1>Excluir Livro</h1>
+        <p>Tem certeza que deseja excluir o livro <strong>{{ book.title }}</strong>?</p>
 
-    <p>
-        Tem certeza que deseja excluir o livro
-        <strong>{{ book.title }}</strong>?
-    </p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Sim, excluir</button>
+        </form>
 
-    <form method="POST">
+        <br>
+        <a href="{% url 'books:book' %}">Cancelar</a>
+    </div>
 
-        {% csrf_token %}
-
-        <button type="submit">
-            Sim, excluir
-        </button>
-
-    </form>
-
-    <br>
-
-    <a href="{% url 'books:book' %}">
-        Cancelar
-    </a>
-
-</body>
-
-</html>
+{% endblock %}

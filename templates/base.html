@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Minha Biblioteca{% endblock %}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a, nav span {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        input, select {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .messages li {
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .messages .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .messages .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        {% block extra_style %}{% endblock %}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Minha Biblioteca</h1>
+
+        <nav>
+            <a href="{% url 'books:book' %}">Início</a>
+            <a href="{% url 'books:register' %}">Cadastrar Livro</a>
+
+            {% if user.is_authenticated %}
+                <span>Olá, {{ user.username }}</span>
+                <a href="{% url 'accounts:logout' %}">Sair</a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">Entrar</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="container">
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+</body>
+
+</html>

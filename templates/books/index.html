@@ -1,166 +1,49 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
 
-    <title>Minha Biblioteca</title>
+    <div class="card">
+        <h2>Pesquisar livros</h2>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            background-color: #222;
-            color: white;
-            padding: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav {
-            margin-top: 15px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-
-        .pesquisa {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-
-        .pesquisa input {
-            padding: 10px;
-            width: 70%;
-        }
-
-        button {
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-
-        .livro {
-            background-color: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        }
-
-        .livro a {
-            margin-right: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <header>
-
-        <h1>Minha Biblioteca</h1>
-
-        <nav>
-
-            <a href="{% url 'books:book' %}">
-                Início
-            </a>
-
-            <a href="{% url 'books:register' %}">
-                Cadastrar Livro
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <div class="container">
-
-        <div class="pesquisa">
-
-            <h2>Pesquisar livros</h2>
-
-            <form method="GET">
-
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Digite o nome do livro..."
-                    value="{{ search }}"
-                >
-
-                <button type="submit">
-                    Pesquisar
-                </button>
-
-            </form>
-
-        </div>
-
-
-        <h2>Livros cadastrados</h2>
-
-
-        {% for book in books %}
-
-            <div class="livro">
-
-                <h3>{{ book.title }}</h3>
-
-                <p>
-                    <strong>Autor:</strong>
-                    {{ book.author }}
-                </p>
-
-                <p>
-                    <strong>Categoria:</strong>
-                    {{ book.category }}
-                </p>
-
-                <p>
-                    <strong>Ano:</strong>
-                    {{ book.publication_year }}
-                </p>
-
-                <a href="{% url 'books:edit' book.id %}">
-                    Editar
-                </a>
-
-                <a href="{% url 'books:delete' book.id %}">
-                    Deletar
-                </a>
-
-            </div>
-
-        {% empty %}
-
-            <p>Nenhum livro encontrado.</p>
-
-        {% endfor %}
-
+        <form method="GET">
+            <input
+                type="text"
+                name="search"
+                placeholder="Digite o nome do livro..."
+                value="{{ search }}"
+            >
+            <button type="submit">Pesquisar</button>
+        </form>
     </div>
 
-</body>
+    <h2>Livros cadastrados</h2>
 
-</html>
+    {% for book in books %}
+        <div class="card">
+            <h3>{{ book.title }}</h3>
+            <p><strong>Autor:</strong> {{ book.author }}</p>
+            <p><strong>Categoria:</strong> {{ book.category }}</p>
+            <p><strong>Ano:</strong> {{ book.publication_year }}</p>
+
+            <a href="{% url 'books:edit' book.id %}">Editar</a>
+            <a href="{% url 'books:delete' book.id %}">Deletar</a>
+        </div>
+    {% empty %}
+        <p>Nenhum livro encontrado.</p>
+    {% endfor %}
+
+    {% if books.has_other_pages %}
+        <div class="card">
+            {% if books.has_previous %}
+                <a href="?page={{ books.previous_page_number }}{% if search %}&search={{ search }}{% endif %}">Anterior</a>
+            {% endif %}
+
+            <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>
+
+            {% if books.has_next %}
+                <a href="?page={{ books.next_page_number }}{% if search %}&search={{ search }}{% endif %}">Próxima</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}
