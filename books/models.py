@@ -22,7 +22,7 @@ class BookModel(models.Model):
     )
     category = models.CharField(max_length=50, blank=True)
     publication_year = models.IntegerField(
-        validators=[MinValueValidator(1400), MinValueValidator(date.today().year)]
+        validators=[MinValueValidator(1400), MaxValueValidator(date.today().year)]
     )
     isbn = models.CharField(
         unique=True,
@@ -35,6 +35,9 @@ class BookModel(models.Model):
         blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True)  #criado_em
+
+    class Meta:
+        ordering = ['title']
 
     def __str__(self):
         return f'{self.author} - {self.title}'
