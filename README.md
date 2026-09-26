@@ -21,6 +21,10 @@ Sistema simples de gerenciamento de livros feito em Django.
 3. Instale as dependências
    pip install -r requirements.txt
 
+4. Copie o arquivo de variáveis de ambiente
+   cp .env.example .env
+   # (no Windows: copy .env.example .env)
+
 4. Rode as migrations
    python manage.py migrate
 
