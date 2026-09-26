@@ -25,10 +25,10 @@ Sistema simples de gerenciamento de livros feito em Django.
    cp .env.example .env
    # (no Windows: copy .env.example .env)
 
-4. Rode as migrations
+5. Rode as migrations
    python manage.py migrate
 
-5. Inicie o servidor
+6. Inicie o servidor
    python manage.py runserver
 
 ## Tecnologias
