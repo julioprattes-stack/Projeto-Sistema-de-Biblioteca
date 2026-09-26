@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db.models import Q
 from books.models import BookModel
 from books.forms import RegisterForm
@@ -11,16 +13,20 @@ def bookview(request):
     if search:
         books = BookModel.objects.filter(
             Q(title__icontains=search) |
-            Q(author__icontains=search)
+            Q(author__name__icontains=search)
         )
     else:
         books = BookModel.objects.all()
+
+    paginator = Paginator(books, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         'books/index.html',
         {
-            'books': books,
+            'books': page_obj,
             'search': search
         }
     )
@@ -31,8 +37,10 @@ def registerview(request):
 
         if form.is_valid():
             form.save()
-
-        return redirect('books:book')
+            messages.success(request, 'Livro cadastrado com sucesso!')
+            return redirect('books:book')
+        else:
+            messages.error(request, 'Erro ao cadastrar. Verifique os dados.')
 
     else:
         form = RegisterForm()
@@ -45,15 +53,17 @@ def registerview(request):
 
 def editview(request, id):
 
-    book = BookModel.objects.get(id=id)
+    book = get_object_or_404(BookModel, id=id)
 
     if request.method == 'POST':
         form = RegisterForm(request.POST, instance=book)
 
         if form.is_valid():
             form.save()
-
+            messages.success(request, 'Livro atualizado com sucesso!')
             return redirect('books:book')
+        else:
+            messages.error(request, 'Erro ao atualizar. Verifique os dados.')
 
     else:
         form = RegisterForm(instance=book)
@@ -66,11 +76,11 @@ def editview(request, id):
 
 def deleteview(request, id):
 
-    book = BookModel.objects.get(id=id)
+    book = get_object_or_404(BookModel, id=id)
 
     if request.method == 'POST':
         book.delete()
-
+        messages.success(request, 'Livro excluído com sucesso!')
         return redirect('books:book')
 
     return render(
