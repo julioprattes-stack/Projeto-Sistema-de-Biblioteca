@@ -1,0 +1,18 @@
+{% extends "basel.html" %}
+
+{% block title %}Criar Conta{% endblock title %}
+
+{% block content %}
+    <div class="card">
+        <h2>Criar Conta</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Criar Conta</button>
+        </form>
+
+        <br>
+        <a href="{% url 'accounts:login' %}">Já tem conta? Entrar</a>
+    </div>
+{% endblock content %}
