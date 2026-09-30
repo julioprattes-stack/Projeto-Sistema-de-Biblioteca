@@ -1,18 +1,33 @@
-{% extends "basel.html" %}
+{% extends "base.html" %}
 
 {% block title %}Criar Conta{% endblock title %}
 
 {% block content %}
     <div class="card">
-        <h2>Criar Conta</h2>
+        <h2>Criar conta</h2>
 
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Criar Conta</button>
+            <div class="form-group">
+                {{ form.username.errros }}
+                <label>Usuário: </label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ user_form.password1.errros }}
+                <label>Senha: </label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.errros }}
+                <label>Confirmação de senha: </label>
+                {{ form.password2 }}
+            </div>
+            <div class="form-group">
+                <button type="submit">Cadastrar</button>
+            </div>
         </form>
 
-        <br>
-        <a href="{% url 'accounts:login' %}">Já tem conta? Entrar</a>
+        <p>Já tem conta? <a href="{% url 'accounts:login' %}">Entrar</a></p>
     </div>
 {% endblock content %}
